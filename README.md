@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="Assets/Icon_Rounded.png" alt="Download Organizer" width="128">
+  <img src="assets/Icon_Rounded.png" alt="DownloadMate" width="128">
 </p>
 
 # DownloadMate
