@@ -2,9 +2,9 @@
   <img src="Assets/Icon_Rounded.png" alt="Download Organizer" width="128">
 </p>
 
-# Download Organizer
+# DownloadMate
 
-A small Python script that sorts files in your Downloads folder into subfolders by file extension.
+Automatically organize your downloads folder into subfolders by file extension.
 
 ## Setup
 
@@ -16,7 +16,7 @@ A small Python script that sorts files in your Downloads folder into subfolders 
 Run from this folder:
 
 ```powershell
-cd "Download Organizer"
+cd "DownloadMate"
 python sorter.py
 ```
 

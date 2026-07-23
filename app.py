@@ -112,7 +112,7 @@ class App(tk.Tk):
         self._nid = None
         self._tray_hwnd = None
 
-        self.title("Download Organizer")
+        self.title("DownloadMate")
         self.geometry("550x350")
         self.resizable(False, False)
         self.protocol("WM_DELETE_WINDOW", self._hide_to_tray)
@@ -171,7 +171,7 @@ class App(tk.Tk):
         nid.uFlags = NIF_MESSAGE | NIF_ICON | NIF_TIP
         nid.uCallbackMessage = WM_TRAY_CALLBACK
         nid.hIcon = hicon
-        nid.szTip = "Download Organizer"
+        nid.szTip = "DownloadMate"
 
         self._nid = nid
         shell32.Shell_NotifyIconW(NIM_ADD, ctypes.byref(nid))
