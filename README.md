@@ -4,7 +4,9 @@
   <img src="assets/Icon_Rounded.png" alt="DownloadMate" width="128">
 </p>
 
-Automatically organize your downloads folder into subfolders by file extension.
+<hr style="border: 3px solid #ccc;">
+
+<p align="center">Automatically organize your downloads folder into subfolders by file extension.</p>
 
 ## Setup
 
