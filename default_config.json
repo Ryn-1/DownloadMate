@@ -1,0 +1,43 @@
+{
+    "downloads_path": "",
+    "poll_interval_sec": 3,
+    "stability_checks": 2,
+    "skip_extensions": [
+        ".part",
+        ".crdownload",
+        ".tmp",
+        ".temp",
+        ".download",
+        ".partial"
+    ],
+    "folders": {
+        "Images": [
+            ".png",
+            ".jpg",
+            ".jpeg",
+            ".gif"
+        ],
+        "Videos": [
+            ".mp4",
+            ".mov",
+            ".avi"
+        ],
+        "Audio": [
+            ".mp3",
+            ".wav"
+        ],
+        "Documents": [
+            ".pdf",
+            ".docx",
+            ".txt"
+        ],
+        "Installers": [
+            ".exe",
+            ".msi",
+            ".msix"
+        ],
+        "Unsorted": [
+            "*"
+        ]
+    }
+}
