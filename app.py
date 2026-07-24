@@ -98,7 +98,7 @@ class App(tk.Tk):
     def __init__(self, config_path=None):
         super().__init__()
         if config_path is None:
-            engine._init_config()
+            engine.init_config()
             config_path = engine.SCRIPT_DIR / "config.json"
         self.config_path = Path(config_path)
         self.config = self._load_config()
@@ -117,7 +117,7 @@ class App(tk.Tk):
         self.resizable(False, False)
         self.protocol("WM_DELETE_WINDOW", self._hide_to_tray)
 
-        icon_file = engine.SCRIPT_DIR / "Assets" / "Icon.ico"
+        icon_file = engine.SCRIPT_DIR / "assets" / "Icon.ico"
         if icon_file.exists():
             try:
                 self.iconbitmap(str(icon_file))
@@ -157,7 +157,7 @@ class App(tk.Tk):
             None, hinstance, None
         )
 
-        icon_path = engine.SCRIPT_DIR / "Assets" / "Icon.ico"
+        icon_path = engine.SCRIPT_DIR / "assets" / "Icon.ico"
         hicon = None
         if icon_path.exists():
             hicon = user32.LoadImageW(
@@ -365,17 +365,15 @@ class App(tk.Tk):
         name_var = tk.StringVar(value=folder_name)
         ext_var = tk.StringVar(value=", ".join(extensions) if extensions else "")
 
-        ttk.Entry(self.folders_frame, textvariable=name_var, width=20).grid(
-            row=row, column=0, padx=(10, 5), pady=5
-        )
-        ttk.Entry(self.folders_frame, textvariable=ext_var, width=40).grid(
-            row=row, column=1, padx=5, pady=5
-        )
+        name_entry = ttk.Entry(self.folders_frame, textvariable=name_var, width=20)
+        name_entry.grid(row=row, column=0, padx=(10, 5), pady=5)
+        ext_entry = ttk.Entry(self.folders_frame, textvariable=ext_var, width=40)
+        ext_entry.grid(row=row, column=1, padx=5, pady=5)
         remove_button = ttk.Button(self.folders_frame, text="X", width=3,
                                    command=lambda r=row: self.remove_folder(r))
         remove_button.grid(row=row, column=2, padx=(5, 10), pady=5)
 
-        self.folder_frames[row] = (name_var, ext_var, remove_button)
+        self.folder_frames[row] = (name_var, ext_var, name_entry, ext_entry, remove_button)
 
     def add_folder(self):
         existing_rows = list(self.folder_frames.keys())
@@ -384,20 +382,10 @@ class App(tk.Tk):
 
     def remove_folder(self, row):
         if row in self.folder_frames:
-            del self.folder_frames[row]
-            self._rebuild_folder_ui()
-
-    def _rebuild_folder_ui(self):
-        entries = [(name.get(), ext.get()) for name, ext, _ in self.folder_frames.values()]
-        for w in self.folders_frame.grid_slaves():
-            w.destroy()
-        self.folder_frames.clear()
-        ttk.Button(self.folders_frame, text="+ Add Folder", command=self.add_folder).grid(
-            row=0, column=0, columnspan=3, sticky="w", padx=10, pady=(10, 5)
-        )
-        for i, (folder_name, extensions_str) in enumerate(entries, start=1):
-            extensions = [e.strip() for e in extensions_str.split(",") if e.strip()]
-            self.create_folder_row(i, folder_name, extensions)
+            name_var, ext_var, name_entry, ext_entry, remove_button = self.folder_frames.pop(row)
+            name_entry.destroy()
+            ext_entry.destroy()
+            remove_button.destroy()
 
     def create_skip_row(self, row, ext=""):
         ext_var = tk.StringVar(value=ext)
@@ -406,7 +394,7 @@ class App(tk.Tk):
         ttk.Entry(frame, textvariable=ext_var, width=20).pack(side="left")
         ttk.Button(frame, text="X", width=3,
                    command=lambda r=row: self.remove_skip(r)).pack(side="left", padx=(5, 0))
-        self.skip_frames[row] = ext_var
+        self.skip_frames[row] = (ext_var, frame)
 
     def add_skip(self):
         existing_rows = list(self.skip_frames.keys())
@@ -415,20 +403,8 @@ class App(tk.Tk):
 
     def remove_skip(self, row):
         if row in self.skip_frames:
-            del self.skip_frames[row]
-            self._rebuild_skip_ui()
-
-    def _rebuild_skip_ui(self):
-        entries = [v.get() for v in self.skip_frames.values()]
-        for w in self.general_frame.grid_slaves():
-            info = w.grid_info()
-            row = int(info["row"])
-            col = int(info["column"])
-            if 2 <= row < 100 and col >= 2:
-                w.destroy()
-        self.skip_frames.clear()
-        for i, ext in enumerate(entries, start=2):
-            self.create_skip_row(i, ext)
+            ext_var, frame = self.skip_frames.pop(row)
+            frame.destroy()
 
     def on_save(self):
         downloads_path = Path(self.downloads_path_var.get().strip())
@@ -439,14 +415,14 @@ class App(tk.Tk):
         self.config["stability_checks"] = self.stability_checks_var.get()
 
         skip_extensions = []
-        for ext_var in self.skip_frames.values():
+        for ext_var, _ in self.skip_frames.values():
             ext = ext_var.get().strip()
             if ext and ext not in skip_extensions:
                 skip_extensions.append(ext)
         self.config["skip_extensions"] = skip_extensions
 
         folders = {}
-        for name_var, ext_var, _ in self.folder_frames.values():
+        for name_var, ext_var, _, _, _ in self.folder_frames.values():
             folder_name = name_var.get().strip()
             extensions_raw = ext_var.get().strip()
             if folder_name and extensions_raw:
@@ -522,8 +498,7 @@ class App(tk.Tk):
             self._pending.pop(file_name, None)
             return
 
-        folder_name = engine.get_target_folder(entry, extension_to_folder, unsorted_folder,
-                                                skip_extensions)
+        folder_name = engine.get_target_folder(entry, extension_to_folder, unsorted_folder)
         if not folder_name:
             return
 
