@@ -6,24 +6,25 @@
 
 <p align="center">Automatically organize your downloads folder into subfolders by file extension.</p>
 
-## Setup
+## Install
 
-1. Install [Python 3](https://www.python.org/downloads/) if you don't have it.
-2. Run the app — `config.json` is created automatically with your Downloads path.
+Open PowerShell and run:
+
+```powershell
+iwr -useb https://raw.githubusercontent.com/Ryn-1/DownloadMate/main/install.ps1 | iex
+```
+
+This downloads the latest release, adds it to your PATH, and creates a Start Menu shortcut.
 
 ## Usage
 
-Run from this folder:
+Run **DownloadMate** from the Start Menu or terminal. The app sits in your system tray and sorts new files into folders by extension. Configure folders and behavior through the GUI or by editing `%LOCALAPPDATA%\DownloadMate\config.json`.
+
+### Run from source
 
 ```powershell
-cd "DownloadMate"
-python sorter.py
-```
-
-Or launch `app.py` for the system-tray GUI:
-
-```powershell
-python app.py
+python sorter.py    # one-shot sort
+python app.py       # system-tray GUI
 ```
 
 ## Configuration
@@ -38,4 +39,5 @@ Files without a matching extension are skipped unless you define an `Unsorted` f
 
 ## Requirements
 
-Python 3 only. No third-party packages.
+- **Binary install** — No dependencies.
+- **Running from source** — Python 3 only. No third-party packages.
