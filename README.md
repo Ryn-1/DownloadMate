@@ -26,11 +26,8 @@ Run **DownloadMate** from the Start Menu or terminal. It sits in your system tra
 | --- | --- |
 | `downloads_path` | Folder to organize |
 | `skip_extensions` | Extensions to ignore (in-progress downloads, temp files) |
+| `poll_interval_sec` | How often (seconds) the app scans the Downloads folder |
+| `stability_checks` | How many scans a file must stay unchanged before being moved |
 | `folders` | Map of folder names to file extensions. Use `"*"` in one folder as a catch-all for unlisted types |
 
 Files without a matching extension are skipped unless you define an `Unsorted` folder with `"*"`.
-
-## Requirements
-
-- **Binary install** — No dependencies.
-- **Running from source** — Python 3 only. No third-party packages.
