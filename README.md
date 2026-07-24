@@ -11,7 +11,7 @@
 Open PowerShell and run:
 
 ```powershell
-iwr -useb https://raw.githubusercontent.com/Ryn-1/DownloadMate/main/install.ps1 | iex
+iwr -useb https://raw.githubusercontent.com/Ryn-1/DownloadMate/master/install.ps1 | iex
 ```
 
 This downloads the latest release, adds it to your PATH, and creates a Start Menu shortcut.
