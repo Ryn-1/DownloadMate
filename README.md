@@ -18,7 +18,7 @@ This downloads the latest release, adds it to your PATH, and creates a Start Men
 
 ## Usage
 
-Run **DownloadMate** from the Start Menu or terminal. It sits in your system tray and automatically sorts new files in your Downloads folder into subfolders by file extension (Images, Videos, Documents, etc.). Configure folders and behavior through the GUI or by editing `%LOCALAPPDATA%\DownloadMate\config.json`.
+Run **DownloadMate** from the Start Menu or terminal. It sits in your system tray and automatically sorts new files in your Downloads folder into subfolders by file extension (Images, Videos, Documents, etc.). Configure folders and behavior through the GUI.
 
 ## Configuration
 
