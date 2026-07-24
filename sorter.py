@@ -47,6 +47,9 @@ def init_config(config_path=None):
     config["downloads_path"] = str(Path.home() / "Downloads")
     with open(config_path, "w") as f:
         json.dump(config, f, indent=4)
+    downloads_path = Path(config["downloads_path"])
+    for folder_name in config.get("folders", {}):
+        (downloads_path / folder_name).mkdir(parents=True, exist_ok=True)
 
 
 _config_cache = {}
