@@ -121,8 +121,8 @@ class App(tk.Tk):
         if icon_file.exists():
             try:
                 self.iconbitmap(str(icon_file))
-            except Exception:
-                pass
+            except tk.TclError as e:
+                print(f"Failed to load icon: {e}")
 
         self._setup_tray()
         self._build_ui()
