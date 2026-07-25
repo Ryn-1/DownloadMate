@@ -382,7 +382,7 @@ class App(tk.Tk):
 
     def remove_folder(self, row):
         if row in self.folder_frames:
-            name_var, ext_var, name_entry, ext_entry, remove_button = self.folder_frames.pop(row)
+            _name_var, _ext_var, name_entry, ext_entry, remove_button = self.folder_frames.pop(row)
             name_entry.destroy()
             ext_entry.destroy()
             remove_button.destroy()
@@ -403,7 +403,7 @@ class App(tk.Tk):
 
     def remove_skip(self, row):
         if row in self.skip_frames:
-            ext_var, frame = self.skip_frames.pop(row)
+            _ext_var, frame = self.skip_frames.pop(row)
             frame.destroy()
 
     def on_save(self):
@@ -454,7 +454,7 @@ class App(tk.Tk):
     def _sort_now(self):
         try:
             engine.organize(str(self.config_path))
-        except Exception as e:
+        except (OSError, json.JSONDecodeError) as e:
             print(f"Sort error: {e}")
 
     def _poll(self):
@@ -462,7 +462,7 @@ class App(tk.Tk):
             return
         try:
             self._poll_once()
-        except Exception as e:
+        except OSError as e:
             print(f"Poll error: {e}")
         self.after(self.poll_interval_ms, self._poll)
 
@@ -471,7 +471,7 @@ class App(tk.Tk):
             downloads_path, skip_extensions, extension_to_folder, unsorted_folder = (
                 engine.configure(str(self.config_path))
             )
-        except Exception as e:
+        except (OSError, json.JSONDecodeError) as e:
             print(f"Config reload error: {e}")
             return
 
@@ -513,9 +513,8 @@ class App(tk.Tk):
             else:
                 self._pending[file_name] = {"size": stats.st_size, "stability_count": 0}
 
-            if self._pending[file_name]["stability_count"] >= self.stability_threshold:
-                if engine.move_file(entry, folder_name, downloads_path):
-                    del self._pending[file_name]
+            if self._pending[file_name]["stability_count"] >= self.stability_threshold and engine.move_file(entry, folder_name, downloads_path):
+                del self._pending[file_name]
         else:
             self._pending[file_name] = {"size": stats.st_size, "stability_count": 0}
 

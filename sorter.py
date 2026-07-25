@@ -141,7 +141,7 @@ def move_file(entry, folder_name, downloads_path):
     try:
         shutil.move(str(entry), str(dest))
         return True
-    except Exception as e:
+    except OSError as e:
         print(f"Failed to move {entry.name}: {e}")
         return False
 
