@@ -16,6 +16,16 @@ iwr -useb https://raw.githubusercontent.com/Ryn-1/DownloadMate/master/install.ps
 
 This downloads the latest release, adds it to your PATH, and creates a Start Menu shortcut.
 
+## Update
+
+Re-run the same command to update to the latest version:
+
+```powershell
+iwr -useb https://raw.githubusercontent.com/Ryn-1/DownloadMate/master/install.ps1 | iex
+```
+
+The install script is idempotent — it will overwrite the existing installation with the latest release.
+
 ## Usage
 
 Run **DownloadMate** from the Start Menu or terminal. It sits in your system tray and automatically sorts new files in your Downloads folder into subfolders by file extension (Images, Videos, Documents, etc.). Configure folders and behavior through the GUI.

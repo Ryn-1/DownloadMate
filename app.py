@@ -3,7 +3,7 @@ import ctypes.wintypes
 import json
 import tkinter as tk
 from pathlib import Path
-from tkinter import ttk, messagebox
+from tkinter import messagebox, ttk
 
 import sorter as engine
 
