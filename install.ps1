@@ -1,4 +1,4 @@
-$repo = "Ryn-1/DownloadMate"
+$repo = "rynfrfr/DownloadMate"
 $exeName = "DownloadMate.exe"
 $installDir = "$env:LOCALAPPDATA\DownloadMate"
 
